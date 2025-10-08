@@ -34,7 +34,7 @@ while True:
             print(contents)
         else:
             diff = time.time() - start_time
-            if diff > 10 and motion:
+            if diff > 60 and motion:
                 print("No motion detected!")
                 motion = False
                 contents = urllib.request.urlopen(
