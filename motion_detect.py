@@ -25,13 +25,14 @@ while True:
     if prev is not None:
         # Measure pixels differences between current and previous frame
         mse = np.square(np.subtract(cur, prev)).mean()
-        if mse > 20 and not motion:
+        if mse > 20:
             print("New motion", mse)
             motion = True
             start_time = time.time()  # init start time
             contents = urllib.request.urlopen(
                 "http://localhost:9999/api/kiosk/motion/1").read()
             print(contents)
+            # urllib.request.urlopen("http://localhost:9999/api/kiosk/motion/1").read()
         else:
             diff = time.time() - start_time
             if diff > 60 and motion:
@@ -40,6 +41,7 @@ while True:
                 contents = urllib.request.urlopen(
                     "http://localhost:9999/api/kiosk/motion/0").read()
                 print(contents)
+            # urllib.request.urlopen("http://localhost:9999/api/kiosk/motion/0").read()
 
     prev = cur
     time.sleep(0)
