@@ -12,7 +12,7 @@ video_config = picam2.create_video_configuration(main={"size": (1280, 720), "for
 picam2.configure(video_config)
 picam2.start()
 
-time.sleep(1)  # Allow the camera to warm up
+time.sleep(10)  # Allow the camera to warm up
 
 w, h = lsize
 prev = None
