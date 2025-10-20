@@ -17,6 +17,7 @@ time.sleep(10)  # Allow the camera to warm up
 w, h = lsize
 prev = None
 motion = True
+pd_threshold = 50   # pixels difference threshold
 start_time = 0
 
 while True:
@@ -25,7 +26,7 @@ while True:
     if prev is not None:
         # Measure pixels differences between current and previous frame
         mse = np.square(np.subtract(cur, prev)).mean()
-        if mse > 20:
+        if mse > pd_threshold:
             print("New motion", mse)
             motion = True
             start_time = time.time()  # init start time
