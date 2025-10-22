@@ -17,7 +17,8 @@ time.sleep(10)  # Allow the camera to warm up
 w, h = lsize
 prev = None
 motion = True
-pd_threshold = 50   # pixels difference threshold
+no_motion = 60 # set motion = False after 60 secs without detection
+pd_threshold = 25 # pixels difference threshold
 start_time = 0
 
 while True:
@@ -30,19 +31,19 @@ while True:
             print("New motion", mse)
             motion = True
             start_time = time.time()  # init start time
-            contents = urllib.request.urlopen(
-                "http://localhost:9999/api/kiosk/motion/1").read()
-            print(contents)
-            # urllib.request.urlopen("http://localhost:9999/api/kiosk/motion/1").read()
+            # contents = urllib.request.urlopen(
+            #     "http://localhost:9999/api/kiosk/motion/1").read()
+            # print(contents)
+            urllib.request.urlopen("http://localhost:9999/api/kiosk/motion/1").read()
         else:
             diff = time.time() - start_time
-            if diff > 60 and motion:
+            if diff > no_motion and motion:
                 print("No motion detected!")
                 motion = False
-                contents = urllib.request.urlopen(
-                    "http://localhost:9999/api/kiosk/motion/0").read()
-                print(contents)
-            # urllib.request.urlopen("http://localhost:9999/api/kiosk/motion/0").read()
+                # contents = urllib.request.urlopen(
+                #     "http://localhost:9999/api/kiosk/motion/0").read()
+                # print(contents)
+                urllib.request.urlopen("http://localhost:9999/api/kiosk/motion/0").read()
 
     prev = cur
-    time.sleep(0)
+    time.sleep(0.01) # 10ms
